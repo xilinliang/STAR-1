@@ -147,6 +147,7 @@ Int_t TStNanoDiffJetTreeMaker::Make()
 	    {
 		mOutSkimEvent->SetTrigFlag(i, 1);
 		mOutSkimEvent->SetTrigBit(i);
+		mOutSkimEvent->SetTrigId(mJetTrig[i]->trigId());
 	    }
 	}
     }
@@ -321,6 +322,16 @@ Int_t TStNanoDiffJetTreeMaker::MakeRps()
 	mRpsTrackData->SetPz(mRpsTrk->pVec().z());		
 	mRpsTrackData->SetXi(mRpsTrk->xi(mBeamMom)); // Beam momentum is approximate		
 	mRpsTrackData->SetMt(-1.0*mRpsTrk->t(mBeamMom));	
+
+	for (Int_t rpPointi=0; rpPointi<mRpsMuColl->numberOfTrackPoints(); ++rpPointi)
+        {
+
+		mRpsTrkPoint = mRpsMuColl->trackPoint(rpPointi);
+		mRpsTrackData->SetX(mRpsTrkPoint->x());
+		mRpsTrackData->SetY(mRpsTrkPoint->y());
+
+	}
+
     }
 
     //afterburner

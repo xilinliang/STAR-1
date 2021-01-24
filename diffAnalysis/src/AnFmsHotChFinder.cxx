@@ -87,7 +87,9 @@ void AnFmsHotChFinder(Int_t fillNoFirst, Int_t fillNoLast, Int_t iteration)
 	hist2d_even->Reset();
 	hist2d_after->Reset();
 	
-	TString inHistFile(Form("dst/R15FmsHotChQa/R15FmsHotChQa_Fill_%i.root", fillNo));
+//	TString inHistFile(Form("dst/R15FmsHotChQa/R15FmsHotChQa_Fill_%i.root", fillNo));
+	TString inHistFile(Form("condorjobResults/DiffJetHotChQA%i.root", fillNo));
+	cout<<"input Hist file:"<<inHistFile<<endl;
 	if(gSystem->AccessPathName(inHistFile))
 	{
 	    if(TStar::gBrDebug)
@@ -439,7 +441,8 @@ void AnFmsCellActivity(Int_t fillNo)
     cout << "------->Max channel for det 8:"<< fmsDBMaker->maxChannel(8) <<endl;
     cout  <<"------->Max channel for det 11:"<< fmsDBMaker->maxChannel(11) <<endl;
     //--------------------------------------------------------------------------------
-    TString inHistFile(Form("dst/R15FmsHotChQa/R15FmsHotChQa_Fill_%i.root", fillNo));
+//    TString inHistFile(Form("dst/R15FmsHotChQa/R15FmsHotChQa_Fill_%i.root", fillNo));
+    TString inHistFile(Form("condorjobResults/DiffJetHotChQA%i.root", fillNo));
     TFile *file = new TFile(inHistFile);
     if(!file)
     {
@@ -580,7 +583,8 @@ void AnHotChQaSaveAsPdf(Int_t fillNo)
     cout << "------->Max channel for det 8:"<< fmsDBMaker->maxChannel(8) <<endl;
     cout  <<"------->Max channel for det 11:"<< fmsDBMaker->maxChannel(11) <<endl;
     //--------------------------------------------------------------------------------
-    TString inHistFile(Form("dst/R15FmsHotChQa/R15FmsHotChQa_Fill_%i.root", fillNo));
+//    TString inHistFile(Form("dst/R15FmsHotChQa/R15FmsHotChQa_Fill_%i.root", fillNo));
+    TString inHistFile(Form("condorjobResults/DiffJetHotChQA%i.root", fillNo));
     TFile *file = new TFile(inHistFile);
     if(!file)
     {

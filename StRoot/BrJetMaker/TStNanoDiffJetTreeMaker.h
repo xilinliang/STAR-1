@@ -72,6 +72,7 @@ private:
     //StMuRpsUtil* mAfterburner;
     StMuRpsTrack *mRpsTrk;
     Double_t mBeamMom;
+    StMuRpsTrackPoint *mRpsTrkPoint;
     
     Int_t mRpNtracks;
     TClonesArray  *mRpsArray;

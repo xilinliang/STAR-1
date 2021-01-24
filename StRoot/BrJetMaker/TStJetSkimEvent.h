@@ -21,6 +21,7 @@ protected:
     Int_t mEventId;
     Int_t mTrigFlags[mMaxTrigs];
     Long_t mTrigBits;
+    Int_t mTrigId;
     Int_t mSpinB;
     Int_t mSpinY;
     Double_t mVertexZ;
@@ -37,6 +38,7 @@ public:
     Int_t GetEventId(){return mEventId;}
     Int_t GetTrigFlag(Int_t index){if(index >= 0 && index < mMaxTrigs) return mTrigFlags[index]; return -1;}
     Bool_t IsTrigBitSet(Int_t bit){return (mTrigBits & (1 << bit));}
+    Int_t GetTrigId(){return mTrigId;}
     Int_t GetSpinB(){return mSpinB;}
     Int_t GetSpinY(){return mSpinY;}
     Double_t GetVertexZ(){return mVertexZ;}
@@ -52,6 +54,7 @@ public:
     void SetEventId(Int_t id){ mEventId = id;}
     void SetTrigFlag(Int_t index, Int_t flag){if(index >= 0 && index < mMaxTrigs) mTrigFlags[index] = flag;}
     void SetTrigBit(Int_t bit){mTrigBits = mTrigBits | 1 << bit;}
+    void SetTrigId(Int_t trig_id){mTrigId = trig_id;}
     void SetSpinB(Int_t spin){ mSpinB = spin;}
     void SetSpinY(Int_t spin){ mSpinY = spin;}
     void SetVertexZ(Double_t z){ mVertexZ = z;}
@@ -77,6 +80,7 @@ public:
 	mEventId = -1;
 	std::fill_n(mTrigFlags, mMaxTrigs, 0);
 	mTrigBits = 0;
+	mTrigId = 0;
 	mSpinB = -999;
 	mSpinY = -999;
 	mVertexZ = -999;

@@ -6,4 +6,4 @@
 
 #include "TString.h"
 
-void AnRunDiffJetTreeMaker(TString inFile = "./inFiles_fms.list", TString outFile = "jets.root", TString det = "fms", Bool_t isMC = kFALSE);
+void AnRunDiffJetTreeMaker(TString inFile = "./inFiles_fms.list", TString outFile = "jets1.root", TString det = "fms", Bool_t isMC = kFALSE);

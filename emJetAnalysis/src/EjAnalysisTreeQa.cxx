@@ -9,6 +9,7 @@
 #include "BrJetMaker/TStJetCandidate.h"
 #include "BrJetMaker/TStJetEvent.h"
 #include "BrJetMaker/TStJetSkimEvent.h"
+#include "BrContainers/TStRpsTrackData.h"
 #include <iostream>
 
 using namespace std;
@@ -24,8 +25,13 @@ void EjAnalysisTreeQa(TString inFileName, TString outName, TString det)
     TStJetCandidate *jet;
     TStJetTower *tower;
     TStJetParticle *particle;
-    
+    TStRpsTrackData *rpsTrack =0;    
+
+    TClonesArray *rpsArr = new TClonesArray("TStRpsTrackData");
+
     ch->SetBranchAddress("jetEvents", &jetEvent);
+    ch->SetBranchAddress("rpTrack",&rpsArr);
+
     
     TFile *outFile = new TFile(outName, "recreate");
     TH1D *h1nJets_all = new TH1D("h1nJets_all", "Number of Jets from All [TPC/BEMC + EEMC + FMS]", 10, 0, 10);
@@ -47,7 +53,13 @@ void EjAnalysisTreeQa(TString inFileName, TString outName, TString det)
     TH1D *h1Pt = new TH1D ("h1Pt", "Jet Pt; Jet Pt [GeV/c]", 100, 0.0, 50.0);
     TH1D *h1nPhotons = new TH1D("h1nPhotons", "number of photons in EM jets; Number of Photons", 20, 0, 20);
     TH1D *h1vtxZ = new TH1D("h1vtxZ", "Jet vetrex z; Jet vertex z [cm]", 100, -200, 200);
-        
+    TH1D *h1_nRpTracks = new TH1D("h1_nRpTracks", "Number of RP tracks", 20, 0, 20);     
+    TH1D *h1_wRpPt = new TH1D("h1_trkPtWest", "West RP trk Pt; RP track P_{T} [GeV/c]", 100, 0, 20);
+    TH1D *h1_eRpPt = new TH1D("h1_trkPtEast", "East RP trk Pt; RP track P_{T} [GeV/c]", 100, 0, 20);    
+    TH1D *h1_wRpP = new TH1D("h1_trkPWest", "West RP trk P; RP track P [GeV/c]", 200, 0, 200);
+    TH1D *h1_eRpP = new TH1D("h1_trkPEast", "East RP trk P; RP track P [GeV/c]", 200, 0, 200);
+    TH1D *h1_RpNPlanes = new TH1D("h1_RpNPlanes","Number of RP planes;N Planes",9,0,8);
+
     TH2D *h2EvsPt = new TH2D("h2EvsPt", "Eng vs Pt; Pt [GeV/C]; E [GeV]", 100, 0, 20, 100, 0, 100);
     TH2D *h2PtvsE = new TH2D("h2PtvsE", "Pt vs E; E [GeV]; Pt [GeV/c]", 100,  0, 100, 100, 0, 20);
     TH2D *h2nPhVsEng = new TH2D("h2nPhVsEng", "Number of photons vs Eng; E [Gev]; No. of Photons", 100, 0, 100, 20, 0, 20);
@@ -170,6 +182,33 @@ void EjAnalysisTreeQa(TString inFileName, TString outName, TString det)
 		h1TowerE->Fill(tower->GetEnergy());
 	    }
 
+		//rp tracks
+	    	Int_t nRpsTracks = rpsArr->GetEntriesFast();
+		h1_nRpTracks->Fill(nRpsTracks);
+		for (Int_t rpTrk=0; rpTrk<nRpsTracks;++rpTrk)
+		{
+		
+			rpsTrack = (TStRpsTrackData*)rpsArr->At(rpTrk);
+
+			h1_RpNPlanes->Fill(rpsTrack->GetNplanes());	
+			if (rpsTrack->GetNplanes()<7) continue;
+	
+			if(rpsTrack->GetBranch() == 2 || rpsTrack->GetBranch() == 3) //West RP :: 2 West Up RP, 3: East Down RP
+            		{
+                	h1_wRpP->Fill(rpsTrack->GetP());
+                	h1_wRpPt->Fill(rpsTrack->GetPt());
+			}
+
+			if(rpsTrack->GetBranch() == 0 || rpsTrack->GetBranch() == 1) //East RP :: O East Up RP, 1: East Down RP
+                        {
+			h1_eRpP->Fill(rpsTrack->GetP());
+			h1_eRpPt->Fill(rpsTrack->GetPt());
+
+			}
+
+
+		}
+
 	    //Particle Branch is for simulated data only
 	    // for(Int_t k = 0; k < jet->GetNumberOfParticles(); ++k)
 	    // {
@@ -188,6 +227,8 @@ void EjAnalysisTreeQa(TString inFileName, TString outName, TString det)
 	    }
 	}
     }
+
+
 
     outFile->Write();
     outFile->Close();

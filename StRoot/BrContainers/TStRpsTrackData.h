@@ -30,7 +30,15 @@ public:
     Double_t mPz;      //
     Double_t mPt;      //
     Double_t mXi;      //
-    Double_t mMt;      // -t of the RP track
+    Double_t mMt;      // -t(transfer momentum) of the RP track
+    Double_t mDeltaThetaX; //delta Theta in x direction for RP track 
+    Double_t mDeltaThetaY;
+    Double_t mX;	//Rp track point position X
+    Double_t mY;        //Rp track point position Y
+    Double_t mNSigmaPr;  //n_sigma of proton
+    Double_t mNSigmaPi;  //n_sigma of pion 
+    Double_t mNSigmaKa;  //n_sigma of kaon
+    Double_t mTime; 	 //Time values, which can be convert into z component of vertex
 
     Int_t GetType(){return mType;}
     Int_t GetNplanes(){return mNplanes;}
@@ -47,6 +55,14 @@ public:
     Double_t GetPt(){return mPt;}
     Double_t GetXi(){return mXi;}
     Double_t GetMt(){return mMt;}
+    Double_t GetDeltaThetaX(){return mDeltaThetaX;}
+    Double_t GetDeltaThetaY(){return mDeltaThetaY;}
+    Double_t GetX(){return mX;}
+    Double_t GetY(){return mY;}
+    Double_t GetNSigmaPr(){return mNSigmaPr;}
+    Double_t GetNSigmaPi(){return mNSigmaPi;}
+    Double_t GetNSigmaKa(){return mNSigmaKa;}
+    Double_t GetTime(){return mTime;}
 
     void SetType(Int_t type){ mType = type;}
     void SetNplanes(Int_t nplanes){ mNplanes = nplanes;}
@@ -63,8 +79,15 @@ public:
     void SetPt(Double_t pt){ mPt = pt;}
     void SetXi(Double_t xi){ mXi = xi;}
     void SetMt(Double_t mt){ mMt = mt;}
+    void SetDeltaThetaX(Double_t mdeltaThetaX){mDeltaThetaX = mdeltaThetaX;}
+    void SetDeltaThetaY(Double_t mdeltaThetaY){mDeltaThetaY = mdeltaThetaY;}
+    void SetX(Double_t X){mX=X;}
+    void SetY(Double_t Y){mY=Y;}
+    void SetNSigmaPr(Double_t nSigmaPr){mNSigmaPr = nSigmaPr;}
+    void SetNSigmaPi(Double_t nSigmaPi){mNSigmaPi = nSigmaPi;}
+    void SetNSigmaKa(Double_t nSigmaKa){mNSigmaKa = nSigmaKa;}
+    void SetTime(Double_t time){mTime=time;}
 
-    
     TStRpsTrackData()
     {
 	Reset();
@@ -90,6 +113,17 @@ public:
         mPt		= -999.0;      
 	mXi		= -999.0;      
 	mMt		= -999.0;   
+	mDeltaThetaX    = -999.0;
+	mDeltaThetaY    = -999.0;
+	mX		= -999.0;
+	mY		= -999.0;
+	mNSigmaPr 	= -999.0;
+	mNSigmaPi       = -999.0;
+	mNSigmaKa       = -999.0;
+	mTime		= -999.0;
+
+
+
     }
 
     TVector3 GetMomentum() { TVector3 v; v.SetPtEtaPhi( mPt, mEta, mPhi ); return v; } 

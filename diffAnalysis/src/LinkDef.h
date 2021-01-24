@@ -29,5 +29,11 @@
 #pragma link C++ function AnRunNanoDstMaker;                     // Nano DST maker for AN Analysis
 
 #pragma link C++ function AnRunDiffJetTreeMaker;                 // Diffractive Jet Tree Maker
+#pragma link C++ function DiffJetAnaTreeQa;			//DiffJetAnaTreeQa (reading NanoDst for Diff Jet ana)
+#pragma link C++ function DiffJetRpTreeQa;                     //DiffJetRpTreeQa (RP QA for Diff Jet with RP cut check)
+#pragma link C++ function DiffJetNum;				//Diffractive jet number normalized by trigger and run
+#pragma link C++ function DiffJetTrigCount;                           //Diffractive jet number separated by trigger and run
+#pragma link C++ function AnFmsCellStatus;                      //Fms Cell map with Qa (XY 2D plot)
+#pragma link C++ function FmsCellStatus;                      //Fms Cell map with Qa (XY 2D plot)
 
 #endif
