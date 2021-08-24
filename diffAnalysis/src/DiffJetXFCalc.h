@@ -6,4 +6,4 @@
 
 #include "TString.h"
 
-void DiffJetRpTreeCut(TString inFileName, TString outName = "DiffJetRpCut.root", TString det = "fms", TString side = "east");
+void DiffJetXFCalc(TString inFileName, TString outName = "DiffJetXFPlot.root", TString det = "fms");

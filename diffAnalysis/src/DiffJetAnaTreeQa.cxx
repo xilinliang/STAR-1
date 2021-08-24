@@ -69,7 +69,7 @@ void DiffJetAnaTreeQa(TString inFileName, TString outName, TString det)
     TH1D *h1_eRpPt = new TH1D("h1_trkPtEast", "East RP trk Pt; RP track P_{T} [GeV/c]", 100, 0, 10);    
     TH1D *h1_wRpP = new TH1D("h1_trkPWest", "West RP trk P; RP track P [GeV/c]", 200, 0, 200);
     TH1D *h1_eRpP = new TH1D("h1_trkPEast", "East RP trk P; RP track P [GeV/c]", 200, 0, 200);
-    TH1D *h1_RpNPlanes = new TH1D("h1_RpNPlanes","Number of RP planes;N Planes",9,0,8);
+    TH1D *h1_RpNPlanes = new TH1D("h1_RpNPlanes","Number of RP planes;N Planes",9,0,9);
 
     TH2D *h2EvsPt = new TH2D("h2EvsPt", "Eng vs Pt; Pt [GeV/C]; E [GeV]", 100, 0, 100, 100, 0, 100);
     TH2D *h2PtvsE = new TH2D("h2PtvsE", "Pt vs E; E [GeV]; Pt [GeV/c]", 100,  0, 100, 100, 0, 100);
@@ -87,14 +87,32 @@ void DiffJetAnaTreeQa(TString inFileName, TString outName, TString det)
 	etaMin = 2.0;
 	etaMax = 4.5;
 	detZ = 735.; //For FMS
+
+	h1TrigType->GetXaxis()->SetBinLabel(1,"FMS JP0");
+	h1TrigType->GetXaxis()->SetBinLabel(2,"FMS JP1");
+	h1TrigType->GetXaxis()->SetBinLabel(3,"FMS JP2");
+	h1TrigType->GetXaxis()->SetBinLabel(4,"Small BS1");
+	h1TrigType->GetXaxis()->SetBinLabel(5,"Small BS2");
+	h1TrigType->GetXaxis()->SetBinLabel(6,"Small BS3");
+	h1TrigType->GetXaxis()->SetBinLabel(7,"Large BS1");
+	h1TrigType->GetXaxis()->SetBinLabel(8,"Large BS2");
+	h1TrigType->GetXaxis()->SetBinLabel(9,"Large BS3");	
     }
     else if(det == "eemc")
     {
-	//etaMin = 1.0;
-	//etaMax = 2.0;
-	etaMin = 0.5;
-        etaMax = 2.5;
+	etaMin = 1.0;
+	etaMax = 2.0;
 	detZ = kEEmcZSMD; //For EEMC
+
+	h1TrigType->GetXaxis()->SetBinLabel(1,"EHT0");
+	h1TrigType->GetXaxis()->SetBinLabel(2,"JP1");
+	h1TrigType->GetXaxis()->SetBinLabel(3,"JP2");
+	h1TrigType->GetXaxis()->SetBinLabel(4,"EHT0*EJP1*L2Egamma");
+	h1TrigType->GetXaxis()->SetBinLabel(5,"JP2*L2JetHigh");
+	h1TrigType->GetXaxis()->SetBinLabel(6,"BHT1*VPDMB-30");
+	h1TrigType->GetXaxis()->SetBinLabel(7,"BHT0*BBCMB");
+	h1TrigType->GetXaxis()->SetBinLabel(8,"BHT1*BBCMB");
+	h1TrigType->GetXaxis()->SetBinLabel(9,"BHT2*BBCMB");		
     }
     else
     {
@@ -124,7 +142,6 @@ void DiffJetAnaTreeQa(TString inFileName, TString outName, TString det)
 	h1spinY->Fill(skimEvent->GetSpinY());
 	h1nJets_all->Fill(jetEvent->GetNumberOfJets());
 	vtxZ = skimEvent->GetVertexZ();
-	cout<<"vertex z:"<<vtxZ<<endl;
 	
 	 for(Int_t t = 0; t < 9; ++t) //Moved to the end of envet loop
 	 {
@@ -133,11 +150,11 @@ void DiffJetAnaTreeQa(TString inFileName, TString outName, TString det)
 	 }
 
 	//Exclude FMS small-bs3 trigger that gives ring of fire issue. But this removes most of high energetic jets.
-//	if(det == "fms")
-//	{
-//	     if(skimEvent->GetTrigFlag(5))
-//		continue;
-//	}
+	if(det == "fms")
+	{
+	     if(skimEvent->GetTrigFlag(5))
+		continue;
+	}
 	//Alternative way to reduce ring of fire, require: BBCMult > 2 and TofMult > 2
 	
 	nJets = 0;	

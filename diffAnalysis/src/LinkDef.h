@@ -35,7 +35,15 @@
 #pragma link C++ function AnIncPion;                             // Create binned histogram for inclusive pion A_N
 
 #pragma link C++ function DiffJetAnaTreeQa;                 // Diffractive Jet Tree QA
+#pragma link C++ function DiffJetRpSimQa;                 // Diffractive Jet RP simulation Tree QA
+#pragma link C++ function DiffJetNum;                 // Diffractive Jet number of jets by trigger
 #pragma link C++ function DiffJetRpCheck;                 // Diffractive Jet RP cut as a check
 #pragma link C++ function DiffJetRpTreeCut;                 // Diffractive Jet RP cut
+#pragma link C++ function DiffJetXFCalc;                   // Diffractive Jet calculate x_F distribution
+#pragma link C++ function DiffJetRawANCalc;                   // Diffractive Jet calculate raw A_N
+#pragma link C++ function DiffJetXFANCalc;                   // Diffractive Jet calculate A_N as a function of x_F
+#pragma link C++ function DiffJetXFNphotonsCalc;             // Diffractive Jet calculate x_F distribution separated by n photons
+#pragma link C++ function DiffJetXFnPhotonsANCalc;             // Diffractive Jet calculate A_N by x_F distribution separated by n photons
+
 
 #endif

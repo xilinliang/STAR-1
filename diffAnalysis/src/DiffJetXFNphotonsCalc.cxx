@@ -15,7 +15,7 @@
 using namespace std;
 
 //Use wildcat in the file name to combine many files.
-void DiffJetRpTreeCut(TString inFileName, TString outName, TString det, TString side)
+void DiffJetXFNphotonsCalc(TString inFileName, TString outName, TString det)
 {
     TChain *ch = new TChain("T");
     ch->Add(inFileName);
@@ -56,29 +56,35 @@ void DiffJetRpTreeCut(TString inFileName, TString outName, TString det, TString 
     TH1D *h1vtxZ = new TH1D("h1vtxZ", "Jet vetrex z; Jet vertex z [cm]", 100, -200, 200);
 
     TH1I *h1_nRpTracks = new TH1I("h1_nRpTracks", "Number of RP tracks", 20, 0, 20);     
-    TH1D *h1_wRpPt = new TH1D("h1_trkPtWest", "West RP trk Pt; RP track P_{T} [GeV/c]", 100, 0, 10);
-    TH1D *h1_eRpPt = new TH1D("h1_trkPtEast", "East RP trk Pt; RP track P_{T} [GeV/c]", 100, 0, 10);    
-    TH1D *h1_wRpP = new TH1D("h1_trkPWest", "West RP trk P; RP track P [GeV/c]", 200, 60, 160);
-    TH1D *h1_eRpP = new TH1D("h1_trkPEast", "East RP trk P; RP track P [GeV/c]", 200, 60, 160);
-    TH1D *h1_RpPt = new TH1D("h1_RptrkPt", "RP trk Pt; RP track P_{T} [GeV/c]", 100, 0, 10);
-    TH1D *h1_RpP = new TH1D("h1_RptrkP", "RP trk P; RP track P [GeV/c]", 200, 60, 160);
+    TH1D *h1_wRpPt = new TH1D("h1_trkPtWest", "West RP trk Pt; RP track P_{T} [GeV/c]", 100, 0, 20);
+    TH1D *h1_eRpPt = new TH1D("h1_trkPtEast", "East RP trk Pt; RP track P_{T} [GeV/c]", 100, 0, 20);    
+    TH1D *h1_wRpP = new TH1D("h1_trkPWest", "West RP trk P; RP track P [GeV/c]", 200, 0, 200);
+    TH1D *h1_eRpP = new TH1D("h1_trkPEast", "East RP trk P; RP track P [GeV/c]", 200, 0, 200);
     TH1I *h1_RpNPlanes = new TH1I("h1_RpNPlanes","Number of RP planes;N Planes",9,0,9);
     TH1I *h1_RpNPlanes_East = new TH1I("h1_RpNPlanes_East","Number of RP planes in East side;N Planes East",9,0,9);
     TH1I *h1_RpNPlanes_West = new TH1I("h1_RpNPlanes_West","Number of RP planes in West side;N Planes West",9,0,9);
-    TH1D *h1_RpThetaX = new TH1D("h1_RpThetaX","Roman Pot #theta_{X};#theta_{X} [mrad]",60,-15,15);
-    TH1D *h1_RpThetaY = new TH1D("h1_RpThetaY","Roman Pot #theta_{Y};#theta_{Y} [mrad]",60,-15,15);
-    TH2D *h2_RpThetaXY = new TH2D ("h2_RpThetaXY","Roman Pot trk #theta_{y} vs #theta_{x};#theta_{x} [mrad];#theta_{y} [mrad]",60,-15,15,60,-15,15);
-    TH1D *h1_RpEta = new TH1D("h1_RpEta","Roman Pot #eta ; #eta",100,-10,10);
-    TH1D *h1_RpPhi = new TH1D ("h1RpPhi", "Roman Pot Phi;  #phi [rad]", 100, -3.3, 3.3);
-    TH2D *h2_RpPxPy = new TH2D ("h2_RpPxPy","Roman Pot trk P_{y} vs P_{x};P_{x} [GeV];P_{y} [GeV]",100,-0.5,0.5,100,-0.5,0.5);
-
     TH2D *h2EvsPt = new TH2D("h2EvsPt", "Eng vs Pt; Pt [GeV/C]; E [GeV]", 100, 0, 20, 100, 0, 100);
     TH2D *h2PtvsE = new TH2D("h2PtvsE", "Pt vs E; E [GeV]; Pt [GeV/c]", 100,  0, 100, 100, 0, 20);
     TH2D *h2nPhVsEng = new TH2D("h2nPhVsEng", "Number of photons vs Eng; E [Gev]; No. of Photons", 100, 0, 100, 20, 0, 20);
-    TH2D *h2xy_fms = new TH2D ("h2xy_fms", "Jet Position [FMS]; Jet X [cm]; Jet Y [cm]", 100, -100, 100, 100, -100, 100);
-    TH2D *h2xy_eemc = new TH2D ("h2xy_eemc", "Jet Position [EEMC]; Jet X [cm]; Jet Y [cm]", 100, -250, 250, 100, -250, 250);
-    TH2D *h2EtaPhi_fms = new TH2D ("h2EtaPhi_fms", "Jet Eta Phi [FMS]; Jet #eta; Jet #phi [rad]", 100, 2.5, 4.5, 100, -3.5, 3.5);
-    TH2D *h2EtaPhi_eemc = new TH2D ("h2EtaPhi_eemc", "Jet Eta Phi [EEMC]; Jet #eta; Jet #phi [rad]", 100, 0.8, 2.5, 100, -3.5, 3.5);
+
+    TH2D *h2_U_xF_vs_phi = new TH2D("h2_U_xF_vs_phi","Blue beam spin +1 x_{F} vs #phi ; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1);
+    TH2D *h2_D_xF_vs_phi = new TH2D("h2_D_xF_vs_phi","Blue beam spin -1 x_{F} vs #phi ; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1);
+    TH2D *h2_U_nPhotons_vs_phi = new TH2D("h2_U_nPhotons_vs_phi","Blue beam spin +1 n photons vs #phi ; #phi [rad] ; n photons",16,-3.14,3.14,6,0,6);
+    TH2D *h2_D_nPhotons_vs_phi = new TH2D("h2_D_nPhotons_vs_phi","Blue beam spin -1 n photons vs #phi ; #phi [rad] ; n photons",16,-3.14,3.14,6,0,6);
+
+    TH2D *h2_U_xF_vs_phi_nPhotons[6];
+    h2_U_xF_vs_phi_nPhotons[1] = new TH2D("h2_U_xF_vs_phi_nPhotons_1","Blue beam spin +1 x_{F} vs #phi n photons = 1 ; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1); 
+    h2_U_xF_vs_phi_nPhotons[2] = new TH2D("h2_U_xF_vs_phi_nPhotons_2","Blue beam spin +1 x_{F} vs #phi n photons = 2 ; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1); 
+    h2_U_xF_vs_phi_nPhotons[3] = new TH2D("h2_U_xF_vs_phi_nPhotons_3","Blue beam spin +1 x_{F} vs #phi n photons = 3 ; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1); 
+    h2_U_xF_vs_phi_nPhotons[4] = new TH2D("h2_U_xF_vs_phi_nPhotons_4","Blue beam spin +1 x_{F} vs #phi n photons = 4 ; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1); 
+    h2_U_xF_vs_phi_nPhotons[5] = new TH2D("h2_U_xF_vs_phi_nPhotons_5","Blue beam spin +1 x_{F} vs #phi n photons = 5+; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1); 
+    TH2D *h2_D_xF_vs_phi_nPhotons[6];
+    h2_D_xF_vs_phi_nPhotons[1] = new TH2D("h2_D_xF_vs_phi_nPhotons_1","Blue beam spin -1 x_{F} vs #phi n photons = 1 ; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1); 
+    h2_D_xF_vs_phi_nPhotons[2] = new TH2D("h2_D_xF_vs_phi_nPhotons_2","Blue beam spin -1 x_{F} vs #phi n photons = 2 ; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1); 
+    h2_D_xF_vs_phi_nPhotons[3] = new TH2D("h2_D_xF_vs_phi_nPhotons_3","Blue beam spin -1 x_{F} vs #phi n photons = 3 ; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1); 
+    h2_D_xF_vs_phi_nPhotons[4] = new TH2D("h2_D_xF_vs_phi_nPhotons_4","Blue beam spin -1 x_{F} vs #phi n photons = 4 ; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1); 
+    h2_D_xF_vs_phi_nPhotons[5] = new TH2D("h2_D_xF_vs_phi_nPhotons_5","Blue beam spin -1 x_{F} vs #phi n photons = 5+; #phi [rad] ; x_{F}",16,-3.14,3.14,10,0,1); 
+
 
     Double_t etaMin;
     Double_t etaMax;
@@ -122,7 +128,7 @@ void DiffJetRpTreeCut(TString inFileName, TString outName, TString det, TString 
     }
     
     
-    Double_t jetX, jetY, eta, phi, theta, vtxZ, eng, pt,nEMjets_cut;
+    Double_t jetX, jetY, eta, phi, theta, vtxZ, eng, pt,nEMjets_cut,xF;
     Int_t nJets = 0;
     
     cout << "Total Entries to be processed: "<< ch->GetEntries() <<endl;
@@ -167,38 +173,20 @@ void DiffJetRpTreeCut(TString inFileName, TString outName, TString det, TString 
 	
 		rpsTrack = (TStRpsTrackData*)rpsArr->At(0);
 
-		h1_RpNPlanes->Fill(rpsTrack->GetNplanes());
-		if(rpsTrack->GetBranch() == 0 || rpsTrack->GetBranch() == 1) {h1_RpNPlanes_East->Fill(rpsTrack->GetNplanes());}	
-		if(rpsTrack->GetBranch() == 2 || rpsTrack->GetBranch() == 3) {h1_RpNPlanes_West->Fill(rpsTrack->GetNplanes());}	
+		h1_RpNPlanes->Fill(rpsTrack->GetNplanes());	
 		if (rpsTrack->GetNplanes()<7) continue;
 		if(rpsTrack->GetBranch() == 0 || rpsTrack->GetBranch() == 1) //East RP :: O East Up RP, 1: East Down RP
                 {
-                	h1_eRpP->Fill(rpsTrack->GetP());
-                	h1_eRpPt->Fill(rpsTrack->GetPt());
-			if (side=="west") continue;
+			continue;
                 }
 		else 
 		{
 			if(rpsTrack->GetBranch() == 2 || rpsTrack->GetBranch() == 3) // 2:  West Up RP, 3: West Down RP
                 	{
-                	h1_wRpP->Fill(rpsTrack->GetP());
-                	h1_wRpPt->Fill(rpsTrack->GetPt());
-			if (side=="east") continue;
+				//continue;
                 	}
 			else continue;
 		}	
-
-		h1_RpThetaX->Fill(rpsTrack->GetThetaX());
-		h1_RpThetaY->Fill(rpsTrack->GetThetaY());	
-		h2_RpThetaXY->Fill(rpsTrack->GetThetaX(),rpsTrack->GetThetaY());
-		if (rpsTrack->GetThetaX() < -2 || rpsTrack->GetThetaX() > 2) continue;
-		if (fabs(rpsTrack->GetThetaY()) <  1.5 || fabs(rpsTrack->GetThetaY()) > 4.5) continue;
-		h1_RpEta->Fill(rpsTrack->GetEta());
-		h1_RpPhi->Fill(rpsTrack->GetPhi());
-		h2_RpPxPy->Fill(rpsTrack->GetPx(),rpsTrack->GetPy());
-		h1_RpPt->Fill(rpsTrack->GetPt());
-		h1_RpP->Fill(rpsTrack->GetP());
-		
 
 
 	if(nJets > 0)
@@ -216,15 +204,17 @@ void DiffJetRpTreeCut(TString inFileName, TString outName, TString det, TString 
 	    jet = jetEvent->GetJet(j);
 	   	    
 	    eta = jet->GetEta();
+	    phi = jet->GetPhi();
 	    theta =  2 * atan( exp(-eta) );
 
 	    if(eta < etaMin || eta > etaMax) //Conside only EEMC and FMS coverage
 		continue;
 
-	    phi = jet->GetPhi();
 	    ++nJets;
 	    eng = jet->GetE();
 	    pt = jet->GetPt();
+	    
+ 	    xF = eng / 100.;
 
 	    if(j == 0)
 		h1vtxZ->Fill(vtxZ);
@@ -233,7 +223,8 @@ void DiffJetRpTreeCut(TString inFileName, TString outName, TString det, TString 
 
 	    //if (eng < 2) continue;
 	    //if (pt < 2) continue; 
-	    h1nPhotons->Fill(jet->GetNumberOfTowers());
+    	    Int_t nPhotons=jet->GetNumberOfTowers();
+	    h1nPhotons->Fill(nPhotons);
 	    h1Eta->Fill(eta);
 	    h1Phi->Fill(phi);
 	    h1Pt->Fill(pt);
@@ -244,26 +235,24 @@ void DiffJetRpTreeCut(TString inFileName, TString outName, TString det, TString 
 	    h2PtvsE->Fill(eng, pt);
 	    h2nPhVsEng->Fill(eng, jet->GetNumberOfTowers());
 
-	    jetX = (detZ - vtxZ) * tan(theta) * cos(phi);
-	    jetY = (detZ - vtxZ) * tan(theta) * sin(phi);
-	    
-	    if(det == "fms")  //actual range 2.65 - 3.9
-	    {	
-		h2xy_fms->Fill(jetX, jetY);
-		h2EtaPhi_fms->Fill(eta, phi);
+	    //fill n entries 
+	    if (skimEvent->GetSpinB() == 1) 
+		{
+			h2_U_xF_vs_phi->Fill(phi,xF);
+			if (nPhotons ==0) {h2_U_xF_vs_phi->Fill(phi,0);}
+			if (nPhotons <=5 && nPhotons > 0) {h2_U_xF_vs_phi->Fill(phi,nPhotons);h2_U_xF_vs_phi_nPhotons[nPhotons]->Fill(phi,xF);}
+			if (nPhotons > 5) {h2_U_xF_vs_phi->Fill(phi,5);h2_U_xF_vs_phi_nPhotons[5]->Fill(phi,xF);}
+		}
 
-		if(eta > 2.0 && eta < 3.15) //FMS large cells
-		    h1JetE_l->Fill(eng); 
-		if(eta > 3.15 && eta < 4.0)  //FMS small cells
-		    h1JetE_s->Fill(eng);		
-	    }
-	    
-	    if(det == "eemc")   // actual range 1.086 - 2.0
-	    {
-		h2xy_eemc->Fill(jetX, jetY);
-		h2EtaPhi_eemc->Fill(eta, phi);
-	    }
-	    
+	    if (skimEvent->GetSpinB() == -1) 
+		{
+			h2_D_xF_vs_phi->Fill(phi,xF);
+			if (nPhotons ==0) {h2_D_xF_vs_phi->Fill(phi,0);}
+			if (nPhotons <=5 && nPhotons > 0) {h2_D_xF_vs_phi->Fill(phi,nPhotons);h2_D_xF_vs_phi_nPhotons[nPhotons]->Fill(phi,xF);}
+			if (nPhotons > 5) {h2_D_xF_vs_phi->Fill(phi,5);h2_D_xF_vs_phi_nPhotons[5]->Fill(phi,xF);}
+		}
+	   
+ 
 	    for(Int_t k = 0; k < jet->GetNumberOfTowers(); ++k)
 	    {
 		tower = jet->GetTower(k);
